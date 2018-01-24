@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://scripts/pipe.gd" type="Script" id=1]
+[ext_resource path="res://assets/cano.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 109.313, 1018.72 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 111.989, 1213.94 )
+
+[sub_resource type="SegmentShape2D" id=3]
+
+custom_solver_bias = 0.0
+a = Vector2( 0, 0 )
+b = Vector2( 0.758911, 408.725 )
+
+[node name="Pipe" type="Node2D"]
+
+z/z = 1
+script/script = ExtResource( 1 )
+velocity = -400
+
+[node name="UpSprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 0, -1225 )
+transform/scale = Vector2( 3, 8 )
+texture = ExtResource( 2 )
+flip_v = true
+
+[node name="DownSprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 0, 1225 )
+transform/scale = Vector2( 3, 8 )
+texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 0.990659, -1.2204, -1236.35 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 1.45615, 1445.43 )
+shapes/1/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShapeUp" type="CollisionShape2D" parent="Area2D"]
+
+transform/pos = Vector2( -1.2204, -1236.35 )
+transform/scale = Vector2( 1, 0.990659 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="CollisionShapeDown" type="CollisionShape2D" parent="Area2D"]
+
+transform/pos = Vector2( 1.45615, 1445.43 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 1
+
+[node name="PointMarker" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 227, -199 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PointMarker"]
+
+transform/pos = Vector2( 227, -199 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="Area2D" to="." method="_on_Area2D_body_enter"]
+
+[connection signal="body_enter" from="PointMarker" to="." method="_on_PointMarker_body_enter"]
+
+
