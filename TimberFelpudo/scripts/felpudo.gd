@@ -8,6 +8,7 @@ onready var animation = get_node("Animation")
 var side;
 const LEFT = 0
 const RIGHT = 1
+
 func _ready():
 	idle.show()
 	hit.hide()
@@ -30,3 +31,9 @@ func right():
 
 func hitting():
 	animation.play("Hitting")
+	
+func dies():
+	animation.stop()
+	idle.hide()
+	hit.hide()
+	grave.show()
